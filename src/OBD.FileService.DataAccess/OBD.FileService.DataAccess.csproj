@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="MNX.Application.Data.DI" Version="1.0.0" />
+    <PackageReference Include="MNX.Application.Data.EF.DI" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OBD.FileService.Files.Integration\OBD.FileService.Files.Integration.csproj" />
+    <ProjectReference Include="..\Users\OBD.FileService.Users.Intergration\OBD.FileService.Users.Intergration.csproj" />
+    <ProjectReference Include="..\Users\OBD.FileService.Users.UseCases\OBD.FileService.Users.UseCases.csproj" />
+  </ItemGroup>
+
+</Project>

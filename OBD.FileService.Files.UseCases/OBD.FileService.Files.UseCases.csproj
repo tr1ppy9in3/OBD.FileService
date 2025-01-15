@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\Command\UploadFileCommand\" />
+    <Folder Include="Files\Command\DeleteFileCommand\" />
+    <Folder Include="Files\Command\MarkFavoriteFileCommand\" />
+    <Folder Include="Files\Queries\GetFavoritesFilesQuery\" />
+    <Folder Include="Folders\Command\CreateFolderCommand\" />
+    <Folder Include="Folders\Command\DeleteFolderCommand\" />
+    <Folder Include="Files\Queries\GetFileByIdQuery\" />
+    <Folder Include="Folders\Command\MarkFolderFileCommand\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MNX.Application.UseCases" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Files\OBD.FileService.Files.Core\OBD.FileService.Files.Core.csproj" />
+  </ItemGroup>
+
+</Project>
