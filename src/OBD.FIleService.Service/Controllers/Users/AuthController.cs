@@ -13,7 +13,7 @@ using OBD.FileService.Users.UseCases.Auth.Commands.RegistrationCommand;
 
 using OBD.FileService.Users.Infrastructure;
 
-namespace IAD.TodoListApp.Service.Controllers;
+namespace OBD.FIleService.Service.Controllers.Users;
 
 /// <summary>
 /// Контроллер для аунтефикации.
@@ -26,7 +26,7 @@ public class AuthController(IMediator mediator,
     /// <summary>
     /// Посредник.
     /// </summary>
-    private readonly IMediator _mediator = mediator 
+    private readonly IMediator _mediator = mediator
         ?? throw new ArgumentNullException(nameof(mediator));
 
     private readonly IUserAccessor _userAccessor = userAccessor
@@ -41,7 +41,7 @@ public class AuthController(IMediator mediator,
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [HttpPost("registration")]
-    public async Task<IActionResult> 
+    public async Task<IActionResult>
     Registration(RegistrationCommand request)
     {
         var result = await _mediator.Send(request);
@@ -57,7 +57,7 @@ public class AuthController(IMediator mediator,
     [ProducesResponseType(typeof(Token), 200)]
     [ProducesResponseType(400)]
     [HttpPost("login")]
-    public async Task<IActionResult> 
+    public async Task<IActionResult>
     Login(LoginCommand request)
     {
         var result = await _mediator.Send(request);
@@ -76,7 +76,7 @@ public class AuthController(IMediator mediator,
     Logout()
     {
         var token = _userAccessor.GetToken();
-        
+
         var result = await _mediator.Send(new LogoutCommand(token!));
         return result.ToActionResult();
     }

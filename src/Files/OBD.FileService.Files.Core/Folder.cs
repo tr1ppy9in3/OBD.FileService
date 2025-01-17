@@ -7,8 +7,6 @@ public class Folder
 
     public required string Name { get; set; }
 
-    public string? Description { get; set; }
-
     public bool IsFavorite { get; set; } = false;
 
     public List<Folder> AttachedFolders { get; set; } = new(0);

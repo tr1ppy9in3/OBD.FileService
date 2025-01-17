@@ -21,7 +21,8 @@ public class FolderRepository(Context context) : IFolderRepository
 
     public Task<Folder?> GetByIdAvailable(Guid Id, long UserId)
     {
-        return _folders.FirstOrDefaultAsync(x => x.UserId == UserId && x.Id == Id);
+        return _folders.IncludeAll()
+                       .FirstOrDefaultAsync(x => x.UserId == UserId && x.Id == Id);
     }
     public Task Create(Folder folder)
     {

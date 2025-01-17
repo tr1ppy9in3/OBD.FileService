@@ -8,7 +8,7 @@ public class FileVersion
 
     public required string Hash { get; set; }
 
-    public required string Content { get; set; }
+    public required byte[] Content { get; set; }
 
     public long SizeBytes { get; set; }
 

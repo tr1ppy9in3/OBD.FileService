@@ -14,7 +14,7 @@ using OBD.FileService.Users.UseCases.Commands.ChangePasswordCommand;
 using OBD.FileService.Users.UseCases.Commands.SelfDeleteCommand;
 using OBD.FileService.Users.UseCases.Auth;
 
-namespace IAD.TodoListApp.Service.Controllers;
+namespace OBD.FIleService.Service.Controllers.Users;
 
 /// <summary>
 /// Контроллер для взаимодействия с текующим пользователем
@@ -26,13 +26,13 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
     /// <summary>
     /// Посредник
     /// </summary>
-    private readonly IMediator _mediator = mediator 
+    private readonly IMediator _mediator = mediator
         ?? throw new ArgumentNullException(nameof(mediator));
 
     /// <summary>
     /// Сервис для доступа к данным авторизованного пользователя.
     /// </summary>
-    private readonly IUserAccessor _userAccessor = userAccessor 
+    private readonly IUserAccessor _userAccessor = userAccessor
         ?? throw new ArgumentNullException(nameof(userAccessor));
 
     /// <summary>
@@ -185,7 +185,7 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
     public async Task<IActionResult> DeleteUser()
     {
         long userId = _userAccessor.GetUserId();
-        
+
         var result = await _mediator.Send(new SelfDeleteCommand(userId));
         return result.ToActionResult();
     }

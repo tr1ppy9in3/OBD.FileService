@@ -3,16 +3,25 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using MNX.Application.UseCases.Results;
 using OBD.FileService.Files.Core;
+
+using OBD.FileService.Files.UseCases.Files;
+using OBD.FileService.Files.UseCases.Files.Command.UploadFileCommand;
+
 using OBD.FileService.Files.UseCases.Folders.Queries.GetAllAvailableFolderQuery;
+using OBD.FileService.Files.UseCases.Folders.Queries.GetAttachedFilesByIdQuery;
+using OBD.FileService.Files.UseCases.Folders.Queries.GetAttachedFoldersByIdQuery;
+using OBD.FileService.Files.UseCases.Folders.Queries.GetFavoritesFoldersQuery;
+
 using OBD.FileService.Users.UseCases.Auth;
 
-namespace OBD.FIleService.Service.Controllers;
+namespace OBD.FIleService.Service.Controllers.Folders;
 
 /// <summary>
 /// Контроллер для взаимодействия с файлами.
 /// </summary>
-[Route("api/folder")]
+[Route("api/folders")]
 [ApiController]
 public class FolderController
 (
@@ -28,14 +37,12 @@ public class FolderController
         ?? throw new ArgumentNullException(nameof(userAccessor));
 
     /// <summary>
-    /// Получить все доступные папки.
+    /// Получить все папки, доступные пользователю.
     /// </summary>
-    /// <returns></returns>
     /// <response code="200"> Успешно. Возвращает все найденные папки, доступные пользователю. </response>
     /// <response code="400"> Некорректный запрос. </response>
-    [HttpGet("folders")]
+    [HttpGet("")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Folder>), 200)]
-    [ProducesResponseType(400)]
     [Authorize(Roles = "RegularUser")]
     public IAsyncEnumerable<Folder> GetAllAvailableFolders()
     {
@@ -43,5 +50,21 @@ public class FolderController
         var result = _mediator.CreateStream(new GetAllAvailableFolderQuery(userId));
 
         return result;
+    }
+
+    [HttpPost("")]
+    [ProducesResponseType(typeof(IAsyncEnumerable<Folder>), 201)]
+    [Authorize(Roles = "RegularUser")]
+    public Task<IActionResult> CreateFolder()
+    {
+        throw new ArgumentNullException();
+    }
+
+    [HttpDelete("")]
+    [ProducesResponseType(typeof(IAsyncEnumerable<Folder>), 201)]
+    [Authorize(Roles = "RegularUser")]
+    public Task<IActionResult> DeleteFolder()
+    {
+        throw new ArgumentNullException();
     }
 }

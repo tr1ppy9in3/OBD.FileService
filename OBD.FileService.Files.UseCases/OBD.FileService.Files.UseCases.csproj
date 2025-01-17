@@ -7,17 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Files\Command\UploadFileCommand\" />
-    <Folder Include="Files\Command\DeleteFileCommand\" />
-    <Folder Include="Files\Command\MarkFavoriteFileCommand\" />
-    <Folder Include="Files\Queries\GetFavoritesFilesQuery\" />
-    <Folder Include="Folders\Command\CreateFolderCommand\" />
-    <Folder Include="Folders\Command\DeleteFolderCommand\" />
-    <Folder Include="Files\Queries\GetFileByIdQuery\" />
-    <Folder Include="Folders\Command\MarkFolderFileCommand\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MNX.Application.UseCases" Version="1.0.2" />
   </ItemGroup>
 
