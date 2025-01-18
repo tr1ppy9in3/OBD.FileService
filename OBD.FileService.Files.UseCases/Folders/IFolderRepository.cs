@@ -4,9 +4,14 @@ namespace OBD.FileService.Files.UseCases.Folders;
 
 public interface IFolderRepository
 {
-    public IAsyncEnumerable<Folder> GetAllAvailable(long UserId);
+    public IAsyncEnumerable<Folder> GetAllAvailable(long userId);
     
-    public Task<Folder?> GetByIdAvailable(Guid Id, long UserId);
+    public Task<bool> ExistByName(string name, long userId);
+
+    public Task<bool> ExistsById(Guid Id, long userId);
+
+
+    public Task<Folder?> GetByIdAvailable(Guid id, long userId);
 
     public Task Create(Folder folder);
 

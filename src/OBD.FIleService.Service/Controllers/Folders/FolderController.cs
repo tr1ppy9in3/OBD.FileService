@@ -8,7 +8,8 @@ using OBD.FileService.Files.Core;
 
 using OBD.FileService.Files.UseCases.Files;
 using OBD.FileService.Files.UseCases.Files.Command.UploadFileCommand;
-
+using OBD.FileService.Files.UseCases.Folders;
+using OBD.FileService.Files.UseCases.Folders.Command.CreateFolderCommand;
 using OBD.FileService.Files.UseCases.Folders.Queries.GetAllAvailableFolderQuery;
 using OBD.FileService.Files.UseCases.Folders.Queries.GetAttachedFilesByIdQuery;
 using OBD.FileService.Files.UseCases.Folders.Queries.GetAttachedFoldersByIdQuery;
@@ -47,7 +48,7 @@ public class FolderController
     public IAsyncEnumerable<Folder> GetAllAvailableFolders()
     {
         var userId = _userAccessor.GetUserId();
-        var result = _mediator.CreateStream(new GetAllAvailableFolderQuery(userId));
+        var result = _mediator.CreateStream(new GetAllAvailableFoldersQuery(userId));
 
         return result;
     }
@@ -55,9 +56,12 @@ public class FolderController
     [HttpPost("")]
     [ProducesResponseType(typeof(IAsyncEnumerable<Folder>), 201)]
     [Authorize(Roles = "RegularUser")]
-    public Task<IActionResult> CreateFolder()
+    public async Task<IActionResult> CreateFolder(FolderInputModel model)
     {
-        throw new ArgumentNullException();
+        var userId = _userAccessor.GetUserId();
+        var result = await _mediator.Send(new CreateFolderCommand(model, userId));
+
+        return result.ToActionResult();
     }
 
     [HttpDelete("")]

@@ -1,4 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
+using OBD.FileService.Files.UseCases.FileSystem.Models;
+
+using OBD.FileService.Service.Common.SwaggerFilters;
 using OBD.FIleService.Service.Common.SwaggerFilters;
 using System.Reflection;
 
@@ -21,15 +24,21 @@ public static class ServiceCollectionExtensions
             options.OperationFilter<SecurityRequirementsOperationFilter>();
             options.OperationFilter<AuthorizeCheckOperationFilter>();
 
+            options.SchemaFilter<PolymorphismSchemaFilter>();
+
             var basePath = AppContext.BaseDirectory;
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(basePath, xmlFile);
+
             options.IncludeXmlComments(xmlPath);
 
             options.UseAllOfToExtendReferenceSchemas();
             options.UseAllOfForInheritance();
             options.UseOneOfForPolymorphism();
+
             options.UseInlineDefinitionsForEnums();
+
+            options.CustomSchemaIds(type => type.FullName);
         });
 
         return services;

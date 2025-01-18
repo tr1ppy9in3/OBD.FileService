@@ -19,10 +19,12 @@ internal class UploadFileCommandHandler(IMapper mapper, IFileRepository fileRepo
     {
         var file = _mapper.Map<File>(request.Model);
         if (await _fileRepository.Exists(file))
+        {
             return Result<File>.Invalid("File already exists!");
-
+        }
+            
         file.UserId = request.UserId;
-        file.FolderId = request.FolderId;
+        file.FolderId = request.Model.ParentFolderId;
 
         await _fileRepository.Create(file);
         return Result<File>.SuccessfullyCreated(file);

@@ -3,6 +3,8 @@
 using MNX.Application.UseCases.Results;
 using OBD.FileService.Users.Core;
 
+using System.Collections;
+
 namespace OBD.FileService.Users.UseCases.Queries;
 
 /// <summary>
@@ -36,7 +38,7 @@ public class GetUserPictureByIdQueryHandler(IUserRepository userRepository) : IR
 
         if (regularUser.ProfilePic is null)
         {
-            return Result<byte[]>.Invalid($"User profile picture to user with Id {request.Id} doesn't exist!");
+            return Result<byte[]>.Success(Array.Empty<byte>());
         }
 
         return Result<byte[]>.Success(regularUser.ProfilePic);

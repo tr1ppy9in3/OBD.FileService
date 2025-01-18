@@ -54,14 +54,14 @@ public class FolderFilesController
     [Consumes("multipart/form-data")]
     [ProducesResponseType(typeof(FileService.Files.Core.File),201)]
     [HttpPost("")]
-    public async Task<IActionResult> UploadFileToFolder(Guid id, [FromForm] FileInputModel model)
+    public async Task<IActionResult> UploadFileToFolder(FileInputModel model)
     {
         long userId = _userAccessor.GetUserId();
 
         if (model.Form == null || model.Form.Length == 0)
             return BadRequest("Файл не загружен");
 
-        var result = await _mediator.Send(new UploadFileCommand(userId, id, model));
+        var result = await _mediator.Send(new UploadFileCommand(userId, model));
         return result.ToActionResult();
     }
 

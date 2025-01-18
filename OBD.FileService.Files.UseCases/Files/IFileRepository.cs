@@ -10,6 +10,8 @@ public interface IFileRepository
     
     public Task<bool> Exists(File file);
 
+    public Task<bool> ExistsByName(string name);
+
     public Task Create(File file);
 
     public Task Update(File file);

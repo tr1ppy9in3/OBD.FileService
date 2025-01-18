@@ -71,7 +71,7 @@ public class FileController
         if (model.Form == null || model.Form.Length == 0)
             return BadRequest("Файл не загружен");
 
-        var result = await _mediator.Send(new UploadFileCommand(userId, null, model));
+        var result = await _mediator.Send(new UploadFileCommand(userId, model));
         return result.ToActionResult();
     }
 

@@ -13,6 +13,7 @@ using OBD.FileService.Users.UseCases.Commands.ChangeEmailCommand;
 using OBD.FileService.Users.UseCases.Commands.ChangePasswordCommand;
 using OBD.FileService.Users.UseCases.Commands.SelfDeleteCommand;
 using OBD.FileService.Users.UseCases.Auth;
+using OBD.FileService.Users.UseCases;
 
 namespace OBD.FIleService.Service.Controllers.Users;
 
@@ -36,21 +37,40 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
         ?? throw new ArgumentNullException(nameof(userAccessor));
 
     /// <summary>
-    /// Получить инициалы текущего пользователя
+    /// Получить всю информацию о пользователе.
     /// </summary>
     /// <returns></returns>
     /// <response code="200"> Успешно. Возвращает найденный профиль. </response>
     /// <response code="400"> Некорректный запрос. </response>
-    [HttpGet("initials")]
-    [ProducesResponseType(typeof(UserInitialsModel), 200)]
+    [HttpGet("")]
+    [ProducesResponseType(typeof(UserInfo), 200)]
     [ProducesResponseType(400)]
     [Authorize(Roles = "RegularUser")]
-    public async Task<IActionResult> GetInitials()
+    public async Task<IActionResult> GetUserInfo()
     {
         long userId = _userAccessor.GetUserId();
 
-        var result = await _mediator.Send(new GetUserInitialsByUserIdQuery(userId));
-        return result.ToActionResult();
+        var resultInitialis = await _mediator.Send(new GetUserInitialsByUserIdQuery(userId));
+        if (!resultInitialis.IsSuccess)
+            return resultInitialis.ToActionResult();
+
+        var resultEmail = await _mediator.Send(new GetEmailQuery(userId));
+        if (!resultEmail.IsSuccess)
+            return resultEmail.ToActionResult();
+
+        var resultPicture = await _mediator.Send(new GetUserPictureByIdQuery(userId));
+        if (!resultPicture.IsSuccess)
+            return resultPicture.ToActionResult();
+
+        var picture = Convert.ToBase64String(resultPicture.GetValue());
+
+        return Ok(new UserInfo()
+        {
+            Name = resultInitialis.GetValue().Name,
+            Surname = resultInitialis.GetValue().Surname,
+            Email = resultEmail.GetValue(),
+            Picture = picture
+        });
     }
 
     /// <summary>
@@ -58,7 +78,7 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
     /// </summary>
     /// <response code="204"> Успешно без контента. </response>
     /// <response code="400"> Некорректный запрос. </response>
-    [HttpPut("initials")]
+    [HttpPatch("initials")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [Authorize(Roles = "RegularUser")]
@@ -100,13 +120,12 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
     /// <response code="201"> Успешно. Возвращает картинку. </response>
     /// <response code="400"> Некорректный запрос. </response>
     /// <response code="415"> Неподдерживаемый тип медиа. </response>
-    [HttpPost("picture")]
+    [HttpPatch("picture")]
     [Consumes("multipart/form-data")]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(415)]
     [Authorize(Roles = "RegularUser")]
-
     public async Task<IActionResult> UpdatePicture(IFormFile picture)
     {
         long userId = _userAccessor.GetUserId();
@@ -123,29 +142,12 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
 
 
     /// <summary>
-    /// Получить почту текущего пользователя
-    /// </summary>
-    /// <response code="204"> Успешно без контента. </response>
-    /// <response code="400"> Некорректный запрос. </response>
-    [HttpGet("email")]
-    [ProducesResponseType(204)]
-    [ProducesResponseType(400)]
-    [Authorize(Roles = "Admin, RegularUser")]
-    public async Task<IActionResult> ChangeEmail()
-    {
-        long userId = _userAccessor.GetUserId();
-
-        var result = await _mediator.Send(new GetEmailQuery(userId));
-        return result.ToActionResult();
-    }
-
-    /// <summary>
     /// Изменить почту текущего пользователя
     /// </summary>
     /// <response code="204"> Успешно без контента. </response>
     /// <response code="400"> Некорректный запрос. </response>
     /// <param name="email"> Измененная почта</param>
-    [HttpPut("email")]
+    [HttpPatch("email")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [Authorize(Roles = "Admin, RegularUser")]
@@ -163,7 +165,7 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
     /// <response code="204"> Успешно без контента.</response>
     /// <response code="400"> Некорректный запрос. </response>
     /// <param name="password"> Измененный пароль</param>
-    [HttpPut("password")]
+    [HttpPatch("password")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [Authorize(Roles = "Admin, RegularUser")]
@@ -187,6 +189,8 @@ public class UserController(IMediator mediator, IUserAccessor userAccessor) : Co
         long userId = _userAccessor.GetUserId();
 
         var result = await _mediator.Send(new SelfDeleteCommand(userId));
+
+
         return result.ToActionResult();
     }
 }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace OBD.FileService.Files.UseCases.Folders.Command.DeleteFolderCommand
-{
-    internal class DeleteFolderCommand
-    {
-    }
-}
+using MNX.Application.UseCases.Results;
+
+namespace OBD.FileService.Files.UseCases.Folders.Command.DeleteFolderCommand;
+
+public record DeleteFolderCommand(Guid FolderId, long UserId) : IRequest<Result<Unit>>;

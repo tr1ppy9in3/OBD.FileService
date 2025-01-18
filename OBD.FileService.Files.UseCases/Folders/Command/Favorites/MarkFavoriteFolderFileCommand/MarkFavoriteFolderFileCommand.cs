@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace OBD.FileService.Files.UseCases.Folders.Command.Favorites.MarkFavoriteFolderFileCommand
-{
-    internal class MarkFavoriteFolderFileCommand
-    {
-    }
-}
+using MNX.Application.UseCases.Results;
+
+namespace OBD.FileService.Files.UseCases.Folders.Command.Favorites.MarkFavoriteFolderFileCommand;
+
+public record MarkFavoriteFolderFileCommand(Guid FolderId, long UserId) : IRequest<Result<Unit>>;

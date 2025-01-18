@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using OBD.FileService.Files.Core;
-using OBD.FileService.Files.UseCases.Tags;
+using OBD.FileService.Files.UseCases.Tags.Abstractions;
 
 namespace OBD.FileService.DataAccess.Files;
 
@@ -45,5 +45,10 @@ public class TagRepository(Context context) : ITagRepository
     public Task<bool> ExistsByName(string name, long UserId)
     {
         return _tags.AnyAsync(tag => tag.Name == name && tag.UserId == UserId); 
+    }
+
+    public Task<bool> ExistsById(Guid id, long UserId)
+    {
+        return _tags.AnyAsync(tag => tag.Id == id && tag.UserId == UserId);
     }
 }

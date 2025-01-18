@@ -3,7 +3,7 @@
 using MNX.Application.UseCases.Results;
 
 using OBD.FileService.Files.Core;
-using OBD.FileService.Files.UseCases.Tags;
+using OBD.FileService.Files.UseCases.Tags.Abstractions;
 
 namespace OBD.FileService.Files.UseCases.Files.Command.Tags.MarkTagToFileCommand;
 

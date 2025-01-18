@@ -6,12 +6,12 @@ using MNX.Application.Data.DI;
 using OBD.FileService.DataAccess.Files;
 using OBD.FileService.Files.UseCases.Files;
 using OBD.FileService.Files.UseCases.Folders;
-using OBD.FileService.Files.UseCases.Tags;
 
 using OBD.FileService.DataAccess.Users;
 using OBD.FileService.DataAccess.Users.Auth;
 using OBD.FileService.Users.UseCases;
 using OBD.FileService.Users.UseCases.Auth;
+using OBD.FileService.Files.UseCases.Tags.Abstractions;
 
 namespace OBD.FileService.DataAccess.Integration;
 

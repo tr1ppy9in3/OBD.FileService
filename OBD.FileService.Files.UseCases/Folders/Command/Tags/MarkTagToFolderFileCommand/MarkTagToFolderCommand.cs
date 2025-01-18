@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace OBD.FileService.Files.UseCases.Folders.Command.Tags.MarkTagToFolderFileCommand
-{
-    internal class MarkTagToFolderCommand
-    {
-    }
-}
+using MNX.Application.UseCases.Results;
+
+namespace OBD.FileService.Files.UseCases.Folders.Command.Tags.MarkTagToFolderFileCommand;
+
+public record MarkTagToFolderCommand(Guid FolderId, Guid TagId, long UserId) : IRequest<Result<Unit>>;

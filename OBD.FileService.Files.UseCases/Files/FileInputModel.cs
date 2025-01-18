@@ -8,6 +8,8 @@ public class FileInputModel
 {
     public required IFormFile Form { get; set; }
 
+    public required Guid? ParentFolderId { get; set; }
+
     public string? Description { get; set; } = default;
 
 }

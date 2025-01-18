@@ -5,7 +5,7 @@ using MNX.Application.UseCases.CommandValidation;
 
 namespace OBD.FileService.Files.UseCases.Files.Command.UploadFileCommand;
 
-public record UploadFileCommand(long UserId, Guid? FolderId, FileInputModel Model) : IValidatableCommand<Core.File>;
+public record UploadFileCommand(long UserId, FileInputModel Model) : IValidatableCommand<Core.File>;
 
 public class UploadFileCommandValidator: AbstractValidator<UploadFileCommand>
 {

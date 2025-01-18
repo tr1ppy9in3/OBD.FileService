@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace OBD.FileService.Files.UseCases.Folders.Command.CreateFolderCommand
-{
-    internal class CreateFolderCommand
-    {
-    }
-}
+using MNX.Application.UseCases.Results;
+
+using OBD.FileService.Files.Core;
+using OBD.FileService.Files.UseCases.Files;
+
+namespace OBD.FileService.Files.UseCases.Folders.Command.CreateFolderCommand;
+
+public record CreateFolderCommand(FolderInputModel Model, long UserId) : IRequest<Result<Folder>>;

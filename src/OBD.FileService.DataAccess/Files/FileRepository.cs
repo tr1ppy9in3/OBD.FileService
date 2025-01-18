@@ -25,7 +25,7 @@ public class FileRepository(Context context) : IFileRepository
     {
         return 
         _files.IncludeAll()
-              .FirstOrDefaultAsync(file => file.UserId == userId);
+              .FirstOrDefaultAsync(file => file.UserId == userId && file.Id == id);
     }
 
     public Task Create(FileService.Files.Core.File file)
@@ -48,7 +48,15 @@ public class FileRepository(Context context) : IFileRepository
 
     public Task<bool> Exists(FileService.Files.Core.File fileInput)
     {
-        return _files.AnyAsync(file => file == fileInput);
+        return
+       _files.AnyAsync(file => file.Name == fileInput.Name &&
+                               file.Extension == fileInput.Extension);
+    }
+
+    public Task<bool> ExistsByName(string name)
+    {
+        return 
+        _files.AnyAsync(file => file.Name == name);
     }
 }
 
