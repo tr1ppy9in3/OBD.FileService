@@ -8,4 +8,6 @@ public class FolderModel : BaseFileSystemObject
     public override FileSystemObjectType Type { get; set; } = FileSystemObjectType.Folder;
 
     public IEnumerable<BaseFileSystemObject> Content { get; set; } = new List<BaseFileSystemObject>(0);
+
+    public int ObjectCount { get; set; }
 }

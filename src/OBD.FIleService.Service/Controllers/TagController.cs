@@ -13,6 +13,7 @@ using OBD.FileService.Files.UseCases.Tags.Queries.GetAllTagsAvailableQuery;
 using OBD.FileService.Files.UseCases.Tags.Models;
 
 using OBD.FileService.Users.UseCases.Auth;
+using OBD.FileService.Files.UseCases.Tags.Queries.GetTagByIdAvailableQuery;
 
 namespace OBD.FIleService.Service.Controllers;
 
@@ -44,6 +45,20 @@ public class TagController
     {
         long userId = _userAccessor.GetUserId();
         return  _mediator.CreateStream(new GetAllTagsAvailableQuery(userId));
+    }
+
+    /// <summary>
+    /// Получить метку по идентификатору.
+    /// </summary>
+    [ProducesResponseType(typeof(TagOutputModel), 200)]
+    [Authorize(Roles = "RegularUser")]
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetTagById(Guid id)
+    {
+        long userId = _userAccessor.GetUserId();
+        var result =  await _mediator.Send(new GetTagByIdAvailableQuery(id, userId));
+
+        return result.ToActionResult();
     }
 
     /// <summary>

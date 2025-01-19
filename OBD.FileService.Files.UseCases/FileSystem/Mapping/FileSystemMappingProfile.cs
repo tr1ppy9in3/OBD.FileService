@@ -29,6 +29,9 @@ public class FileSystemMappingProfile : Profile
             .ForMember(folder => folder.SizeInBytes, opts => opts
             .MapFrom(src => src.TotalSizeBytes))
 
+            .ForMember(folder => folder.ObjectCount, opts => opts
+            .MapFrom(src => src.TotalObjectCount))
+
             .ForMember(dest => dest.Content, opts => opts
             .MapFrom(src => CombineFilesAndFolders(src.AttachedFiles, src.AttachedFolders)))
 

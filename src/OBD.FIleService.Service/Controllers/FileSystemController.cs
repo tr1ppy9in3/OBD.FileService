@@ -203,7 +203,7 @@ public class FileSystemController
     /// </summary>
     /// <param name="id"> Идентификатор объекта. </param>
     [Authorize(Roles = "RegularUser")]
-    [HttpPost("favorites")]
+    [HttpPost("favorites/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> MarkSystemObjectAsFavorite(Guid id)
     {
